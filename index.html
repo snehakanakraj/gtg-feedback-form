@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTG · Peer Feedback Submission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-light:  #0CA6A2;
+    --teal-dark:   #005E6E;
+    --teal-deep:   #0A2735;
+    --teal-row:    #EAF6F6;
+    --teal-row2:   #F5FBFB;
+    --teal-border: rgba(12,166,162,0.25);
+    --teal-glow:   rgba(12,166,162,0.10);
+    --teal-focus:  rgba(12,166,162,0.18);
+    --stone:       #877871;
+    --sand:        #DFB97E;
+    --dusk:        #A55C56;
+    --slate:       #364257;
+    --emerald:     #136A59;
+    --bg:          #FFFFFF;
+    --surface:     #FFFFFF;
+    --surface2:    #F7FAFA;
+    --border:      #E2EDED;
+    --border-mid:  rgba(12,166,162,0.3);
+    --text:        #0A2735;
+    --text-mid:    #364257;
+    --text-muted:  #877871;
+    --text-dim:    #B0BAC0;
+    --auto-bg:     #EDF7F7;
+    --auto-text:   #005E6E;
+    --auto-border: rgba(12,166,162,0.2);
+    --error:       #A55C56;
+    --error-bg:    rgba(165,92,86,0.06);
+    --success:     #136A59;
+    --radius:      8px;
+    --radius-lg:   12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 88px;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    background: var(--teal-light);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(10,39,53,0.15);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-decoration: none;
+  }
+  .logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+  }
+  .logo-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255,255,255,0.35);
+    flex-shrink: 0;
+  }
+  .logo-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    color: rgba(255,255,255,0.92);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .cycle-badge {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal-deep);
+    background: rgba(255,255,255,0.92);
+    border: none;
+    border-radius: 20px;
+    padding: 6px 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Hero band ── */
+  .hero {
+    background: var(--teal-deep);
+    padding: 48px 48px 44px;
+  }
+  .hero-eyebrow {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--teal-light);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+  }
+  .hero p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    max-width: 600px;
+    font-weight: 400;
+  }
+
+  /* ── Page layout ── */
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+  }
+
+  /* ── Instructions banner ── */
+  .instructions {
+    background: var(--teal-glow);
+    border: 1px solid var(--teal-border);
+    border-left: 3px solid var(--teal-light);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 32px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .instructions-icon {
+    font-size: 15px;
+    color: var(--teal-light);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .instructions p {
+    font-size: 13px;
+    color: var(--teal-dark);
+    line-height: 1.6;
+  }
+  .instructions p strong { font-weight: 700; color: var(--teal-deep); }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--teal-deep);
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Fields ── */
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .field label .req { color: var(--teal-light); margin-left: 2px; }
+  .field input, .field select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--teal-light);
+    box-shadow: 0 0 0 3px var(--teal-focus);
+  }
+  .field input::placeholder { color: var(--text-dim); }
+  .field select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230CA6A2' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  .field.auto input {
+    background: var(--auto-bg);
+    color: var(--auto-text);
+    border-color: var(--auto-border);
+    font-style: italic;
+    cursor: default;
+    font-weight: 500;
+  }
+
+  /* ── Section divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 36px 0 20px;
+  }
+  .section-divider-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--teal-deep);
+    white-space: nowrap;
+  }
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Employee cards ── */
+  .employees-container { display: flex; flex-direction: column; gap: 14px; }
+
+  .emp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .emp-card:focus-within {
+    border-color: var(--teal-border);
+    box-shadow: 0 2px 16px var(--teal-glow);
+  }
+
+  .emp-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 24px;
+    background: var(--teal-row2);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .emp-header:hover { background: var(--teal-row); }
+
+  .emp-number {
+    width: 30px; height: 30px;
+    background: var(--teal-light);
+    color: #fff;
+    border-radius: 6px;
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+  .emp-header-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--teal-deep);
+  }
+  .emp-header-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-right: 8px;
+    font-weight: 500;
+  }
+  .emp-toggle {
+    color: var(--teal-light);
+    font-size: 16px;
+    transition: transform 0.2s;
+    line-height: 1;
+  }
+  .emp-toggle.open { transform: rotate(180deg); }
+  .remove-emp {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 18px;
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    transition: color 0.15s, background 0.15s;
+    line-height: 1;
+    margin-left: 4px;
+  }
+  .remove-emp:hover { color: var(--dusk); background: var(--error-bg); }
+
+  .emp-body {
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    background: #fff;
+  }
+  .emp-body.collapsed { display: none; }
+
+  .reviewee-fields {
+    display: grid;
+    grid-template-columns: 1.4fr 1.4fr 1fr;
+    gap: 16px;
+  }
+
+  /* ── Reviewers ── */
+  .reviewers-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .reviewers-head-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--teal-deep);
+  }
+  .reviewer-counter {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 11px;
+  }
+
+
+  .reviewer-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 30px;
+    gap: 10px;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: var(--radius);
+    transition: background 0.1s;
+    margin-bottom: 4px;
+  }
+  .reviewer-row:nth-child(odd)  { background: var(--teal-row2); }
+  .reviewer-row:nth-child(even) { background: var(--teal-row); }
+  .reviewer-row input {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: 'Manrope', sans-serif;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+  }
+  .reviewer-row input:focus {
+    border-color: var(--teal-light);
+    box-shadow: 0 0 0 2px var(--teal-focus);
+  }
+  .reviewer-row input::placeholder { color: var(--text-dim); }
+  .reviewer-row input.auto-input {
+    background: var(--auto-bg);
+    color: var(--auto-text);
+    border-color: var(--auto-border);
+    font-style: italic;
+    cursor: default;
+    font-weight: 500;
+  }
+  .remove-reviewer {
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    cursor: pointer;
+    width: 30px; height: 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: color 0.15s, background 0.15s;
+    flex-shrink: 0;
+  }
+  .remove-reviewer:hover { color: var(--dusk); background: var(--error-bg); }
+
+  .add-reviewer-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: none;
+    border: 1px dashed var(--teal-border);
+    border-radius: var(--radius);
+    color: var(--teal-dark);
+    font-size: 13px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    margin-top: 6px;
+  }
+  .add-reviewer-btn:hover { border-color: var(--teal-light); color: var(--teal-light); background: var(--teal-glow); }
+  .add-reviewer-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* ── Add employee button ── */
+  .add-emp-btn {
+    width: 100%;
+    background: none;
+    border: 1.5px dashed var(--teal-border);
+    border-radius: var(--radius-lg);
+    color: var(--teal-dark);
+    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.15s;
+    margin-top: 8px;
+  }
+  .add-emp-btn:hover { border-color: var(--teal-light); color: var(--teal-light); background: var(--teal-glow); }
+
+  /* ── Footer bar ── */
+  .footer-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--border);
+    padding: 14px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(10,39,53,0.06);
+  }
+  .footer-summary {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .footer-summary strong { color: var(--teal-deep); font-weight: 700; }
+  .footer-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn-secondary {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 13px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 600;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--stone); color: var(--text); }
+
+  .btn-primary {
+    background: var(--teal-light);
+    border: none;
+    border-radius: var(--radius);
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    padding: 10px 26px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 84px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: var(--teal-deep);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 11px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 200;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(10,39,53,0.2);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .toast.error { background: var(--dusk); }
+  .toast.success { background: var(--emerald); }
+
+  /* ── Autocomplete dropdown ── */
+  .name-input-wrap { position: relative; }
+  .suggestions {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0; right: 0;
+    background: #fff;
+    border: 1px solid var(--teal-border);
+    border-radius: var(--radius);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 50;
+    display: none;
+    box-shadow: 0 8px 24px rgba(10,39,53,0.1);
+  }
+  .suggestions.open { display: block; }
+  .suggestion-item {
+    padding: 9px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .suggestion-item:last-child { border-bottom: none; }
+  .suggestion-item:hover, .suggestion-item.active { background: var(--teal-row); }
+  .suggestion-item .s-name { color: var(--teal-deep); font-weight: 600; }
+  .suggestion-item .s-meta { color: var(--text-muted); font-size: 11px; }
+
+  @media (max-width: 680px) {
+    .site-header { padding: 0 20px; }
+    .hero { padding: 32px 20px 28px; }
+    .hero h1 { font-size: 26px; }
+    .page { padding: 28px 16px 0; }
+    .field-row { grid-template-columns: 1fr; }
+    .reviewee-fields { grid-template-columns: 1fr 1fr; }
+    .footer-bar { padding: 12px 20px; }
+    .reviewer-row { grid-template-columns: 1fr 30px; }
+    .reviewer-row input:first-child { grid-column: 1 / -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="logo">
+    <img src="data:image/png;base64,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" alt="Global Think Group" class="logo-img">
+    <div class="logo-divider"></div>
+    <div class="logo-sub">People &amp; Culture</div>
+  </div>
+  <div class="header-right">
+    <div class="cycle-badge" id="cycle-badge">GTG H1 2026</div>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">Peer Feedback Programme</div>
+  <h1>Line manager submission</h1>
+  <p>Select your employees and their five feedback providers below. Hit Submit when complete — responses go directly to SharePoint and Power Automate sends all feedback requests automatically.</p>
+</div>
+
+<!-- Page body -->
+<main class="page">
+
+  <div class="instructions">
+    <div class="instructions-icon">→</div>
+    <p><strong>How this works:</strong> Fill in each employee and choose 5 colleagues to give feedback. Names auto-complete from the staff directory — email fills in automatically. Hit <strong>Submit</strong> and everything is sent directly to SharePoint — Power Automate will email all colleagues automatically.</p>
+  </div>
+
+  <!-- Manager details -->
+  <div class="card">
+    <div class="card-title">Your details</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Your full name <span class="req">✦</span></label>
+        <div class="name-input-wrap">
+          <input type="text" id="mgr-name" placeholder="Type to search…" autocomplete="off">
+        </div>
+      </div>
+      <div class="field auto">
+        <label>Your email (auto-fills)</label>
+        <input type="text" id="mgr-email" placeholder="—" readonly tabindex="-1">
+      </div>
+      <div class="field">
+        <label>Review cycle <span class="req">✦</span></label>
+        <select id="mgr-cycle">
+          <option value="GTG H1 2026">GTG H1 2026</option>
+          <option value="GTG H2 2026">GTG H2 2026</option>
+          <option value="GTG H1 2027">GTG H1 2027</option>
+          <option value="GTG H2 2027">GTG H2 2027</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Feedback deadline <span class="req">✦</span></label>
+        <input type="date" id="mgr-deadline">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="section-divider-title">Employees being reviewed</div>
+  </div>
+
+  <div class="employees-container" id="employees-container"></div>
+
+  <button class="add-emp-btn" onclick="addEmployee()">+ Add employee</button>
+
+</main>
+
+<!-- Footer -->
+<div class="footer-bar">
+  <div class="footer-summary" id="footer-summary">0 employees · 0 reviewers added</div>
+  <div class="footer-actions">
+    <button class="btn-secondary" onclick="clearAll()">Clear all</button>
+    <button class="btn-primary" id="submit-btn" onclick="submitToSharePoint()">→ Submit feedback requests</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const STAFF = [
+  {name:"Aarushi Mittal",email:"Aarushi@globalthinkgroup.com",dept:"Design",title:"Art Director"},
+  {name:"Abdulaziz Alalam",email:"abdulaziz@globalthinkgroup.com",dept:"Consulting",title:"Account Executive"},
+  {name:"Abdullah Aljammaz",email:"Abdullah@globalthinkgroup.com",dept:"Corporate",title:"Senior Accountant"},
+  {name:"Abdulrahman Anwar Shahada",email:"abdulrahman@globalthinkgroup.com",dept:"Corporate",title:"Financial Director"},
+  {name:"Abhishek Pundhir",email:"Abhishek@globalthinkgroup.com",dept:"Design",title:"Senior Designer"},
+  {name:"Adam Alon Cohen",email:"adam@globalthinkgroup.com",dept:"Consulting",title:"Senior Director"},
+  {name:"Adedoyin Odulana",email:"Doyin@globalthinkgroup.com",dept:"Consulting",title:"Account Director"},
+  {name:"Ahad Mustafa",email:"Ahad@globalthinkgroup.com",dept:"Content",title:"Senior Content Writer"},
+  {name:"Ahmed Nabil Attia Albendary",email:"ahmed@globalthinkgroup.com",dept:"Content",title:"Arabic Content Manager"},
+  {name:"Akin Aytekin",email:"akin@globalthinkgroup.com",dept:"Content",title:"Content Director"},
+  {name:"Alaa Bachacha",email:"alaa@globalthinkgroup.com",dept:"Design",title:"Senior Designer"},
+  {name:"Alexander Mears",email:"Alexander@globalthinkgroup.com",dept:"Content",title:"Senior Content Manager"},
+  {name:"Alexynne Villena",email:"Alexynne@globalthinkgroup.com",dept:"Consulting",title:"Senior Digital Executive"},
+  {name:"Andrew Brown",email:"andrew.b@globalthinkgroup.com",dept:"Consulting",title:"Digital Manager"},
+  {name:"Andrew Peters",email:"andrew@globalthinkgroup.com",dept:"Content",title:"Associate Content Director"},
+  {name:"Andrianna Dafnis",email:"andrianna@globalthinkgroup.com",dept:"Corporate",title:"Managing Partner"},
+  {name:"Arianna Khan",email:"arianna@globalthinkgroup.com",dept:"Consulting",title:"Senior Director"},
+  {name:"Arshad Mahmood",email:"arshad@globalthinkgroup.com",dept:"Corporate",title:"Business Operations Coordinator"},
+  {name:"Bashar Koheji",email:"Bashar@globalthinkgroup.com",dept:"Content",title:"Content Writer"},
+  {name:"Basmah Ali",email:"Basmah@globalthinkgroup.com",dept:"Consulting",title:"Account Manager"},
+  {name:"Bernardo Bruzzone",email:"bernardo@globalthinkgroup.com",dept:"Consulting",title:"Account Director"},
+  {name:"Beth Tarling",email:"Beth@globalthinkgroup.com",dept:"Consulting",title:"Director"},
+  {name:"Brice Adler",email:"brice@globalthinkgroup.com",dept:"Consulting",title:"Director"},
+  {name:"Chiraag Shah",email:"Chiraag@globalthinkgroup.com",dept:"Content",title:"Junior Content Writer"},
+  {name:"Declan Naicker",email:"declan.naicker@gmail.com",dept:"Content",title:"Content Writer"},
+  {name:"Dimitrios Mouchlidis",email:"dimitris@globalthinkgroup.com",dept:"Consulting",title:"Account Director"},
+  {name:"Eman Mohamed",email:"eman@globalthinkgroup.com",dept:"Content",title:"Arabic Content Manager"},
+  {name:"Emma Johansson",email:"emma@globalthinkgroup.com",dept:"Consulting",title:"Account Manager"},
+  {name:"Evan Pheiffer",email:"evan@globalthinkgroup.com",dept:"Content",title:"Senior Content Manager"},
+  {name:"Evita Chahine",email:"evita@globalthinkgroup.com",dept:"Consulting",title:"Digital Executive"},
+  {name:"Farida Khalil",email:"Farida@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Manager"},
+  {name:"Freha Amjad",email:"Freha@globalthinkgroup.com",dept:"Consulting",title:"Account Manager"},
+  {name:"Ghada El-Hoss",email:"Ghada@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Manager"},
+  {name:"Hady Farouk",email:"Hady@globalthinkgroup.com",dept:"Content",title:"Arabic Content Manager"},
+  {name:"Haila Alfadhel",email:"Haila@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Executive"},
+  {name:"Hamed Aldhahri",email:"Hamed@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Manager"},
+  {name:"Hoda El Achi",email:"huda@globalthinkgroup.com",dept:"Design",title:"Senior Art Director"},
+  {name:"Jack McGee",email:"jack@globalthinkgroup.com",dept:"Consulting",title:"Senior Director"},
+  {name:"Jenna Alenazi",email:"Jenna@globalthinkgroup.com",dept:"Consulting",title:"Account Executive"},
+  {name:"Jonathan Hilliam",email:"jonny@globalthinkgroup.com",dept:"Consulting",title:"Director"},
+  {name:"Joseph El Khoury",email:"Joseph@globalthinkgroup.com",dept:"Design",title:"Senior Designer"},
+  {name:"Lauren Smith",email:"Lauren@globalthinkgroup.com",dept:"Corporate",title:"HR Specialist"},
+  {name:"Layal Hossary",email:"layal@globalthinkgroup.com",dept:"Consulting",title:"Senior Digital Executive"},
+  {name:"Lexie Knowles",email:"lexie@globalthinkgroup.com",dept:"Corporate",title:"Commercial Director"},
+  {name:"Louie Tejuco",email:"louie@globalthinkgroup.com",dept:"Design",title:"Multimedia Designer"},
+  {name:"Lukas Bester",email:"lukas@globalthinkgroup.com",dept:"Content",title:"Senior Content Manager"},
+  {name:"Lynne-Ann Abrahams",email:"lynne@globalthinkgroup.com",dept:"Content",title:"Senior Content Manager"},
+  {name:"Mada AlAgel",email:"Mada@globalthinkgroup.com",dept:"Content",title:"Arabic Content Manager"},
+  {name:"Marco Binenti",email:"marco@globalthinkgroup.com",dept:"Corporate",title:"Partner"},
+  {name:"Michael Luk",email:"Michael@globalthinkgroup.com",dept:"Consulting",title:"Associate Director"},
+  {name:"Mohammed Jabr",email:"mohammed@globalthinkgroup.com",dept:"Corporate",title:"Accountant"},
+  {name:"Natalie Greve",email:"natalie@globalthinkgroup.com",dept:"Content",title:"Senior Content Manager"},
+  {name:"Natasha Stafford",email:"natasha@globalthinkgroup.com",dept:"Corporate",title:"Business Operations Director"},
+  {name:"Nourallah Alhalwani",email:"nourallah@globalthinkgroup.com",dept:"Consulting",title:"Account Executive"},
+  {name:"Obai Afifi",email:"Obai@globalthinkgroup.com",dept:"Consulting",title:"Associate Director"},
+  {name:"Ralph Platon",email:"Ralph@globalthinkgroup.com",dept:"Design",title:"Multimedia Designer"},
+  {name:"Robyn Forbay",email:"robyn4bay@gmail.com",dept:"Content",title:"Content Writer"},
+  {name:"Salim Abduljawad",email:"Salim@globalthinkgroup.com",dept:"Corporate",title:"Business Operations Manager"},
+  {name:"Salma Aly",email:"Salma@globalthinkgroup.com",dept:"Design",title:"Senior Designer"},
+  {name:"Sarah Alharbi",email:"sarah@globalthinkgroup.com",dept:"Consulting",title:"Account Manager"},
+  {name:"Shahd El-Ezaby",email:"Shahd@globalthinkgroup.com",dept:"Design",title:"Junior Graphic Designer"},
+  {name:"Shahzad Amir",email:"shahzad@globalthinkgroup.com",dept:"Corporate",title:"Business Operations Supervisor"},
+  {name:"Shane Horgan",email:"shane@globalthinkgroup.com",dept:"Consulting",title:"Senior Digital Director"},
+  {name:"Sharrah Khilawala",email:"Sharrah@globalthinkgroup.com",dept:"Consulting",title:"Account Director"},
+  {name:"Shoug Alanzi",email:"shoug@globalthinkgroup.com",dept:"Consulting",title:"Account Executive"},
+  {name:"Simran Tandan",email:"Simran@globalthinkgroup.com",dept:"Design",title:"Graphic Designer"},
+  {name:"Smaher Ghazzawi",email:"smaher@globalthinkgroup.com",dept:"Design",title:"Senior Designer"},
+  {name:"Sneha Kanakraj",email:"Sneha@globalthinkgroup.com",dept:"Corporate",title:"Senior HR Manager"},
+  {name:"Suad Al Bibi",email:"suad@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Manager"},
+  {name:"Sulhia Kassim",email:"sulhia@globalthinkgroup.com",dept:"Content",title:"Junior Content Writer"},
+  {name:"Toleen Abduljawad",email:"Toleen@globalthinkgroup.com",dept:"Design",title:"Junior Graphic Designer"},
+  {name:"Yaser AlSalah",email:"yaser@globalthinkgroup.com",dept:"Consulting",title:"Senior Account Executive"},
+  {name:"Yousef Alashmawy",email:"yousef@globalthinkgroup.com",dept:"Consulting",title:"Paid Media Manager"},
+  {name:"Youssef Idrissi",email:"Youssef@globalthinkgroup.com",dept:"Consulting",title:"Senior Digital Manager"},
+  {name:"Zena Afara",email:"Zena@globalthinkgroup.com",dept:"Consulting",title:"Account Director"},
+];
+
+let empCount = 0, employees = {}, reviewerCount = 0;
+
+// Sync cycle badge
+document.getElementById('mgr-cycle').addEventListener('change', function() {
+  document.getElementById('cycle-badge').textContent = this.value;
+});
+
+// Default deadline 4 weeks out
+const dl = new Date(); dl.setDate(dl.getDate() + 28);
+document.getElementById('mgr-deadline').value = dl.toISOString().split('T')[0];
+
+// Manager name autocomplete
+const mgrNameInput = document.getElementById('mgr-name');
+const mgrEmailInput = document.getElementById('mgr-email');
+mgrNameInput.addEventListener('input', () => {
+  const s = findStaff(mgrNameInput.value);
+  mgrEmailInput.value = s ? s.email : '';
+});
+attachAutocomplete(mgrNameInput, staff => {
+  mgrEmailInput.value = staff.email;
+});
+
+function findStaff(name) {
+  return STAFF.find(s => s.name.toLowerCase() === name.toLowerCase()) || null;
+}
+function searchStaff(q) {
+  if (!q || q.length < 2) return [];
+  const ql = q.toLowerCase();
+  return STAFF.filter(s => s.name.toLowerCase().includes(ql)).slice(0, 8);
+}
+
+function attachAutocomplete(input, onSelect) {
+  const wrap = input.closest('.name-input-wrap');
+  if (!wrap) return;
+  let list = wrap.querySelector('.suggestions');
+  if (!list) { list = document.createElement('div'); list.className = 'suggestions'; wrap.appendChild(list); }
+  let activeIdx = -1;
+
+  input.addEventListener('input', () => {
+    const results = searchStaff(input.value);
+    activeIdx = -1;
+    if (!results.length) { list.classList.remove('open'); return; }
+    list.innerHTML = results.map((s,i) =>
+      `<div class="suggestion-item" data-idx="${i}">
+        <span class="s-name">${s.name}</span>
+        <span class="s-meta">${s.title} · ${s.dept}</span>
+      </div>`
+    ).join('');
+    list.classList.add('open');
+    list.querySelectorAll('.suggestion-item').forEach((el,i) => {
+      el.addEventListener('mousedown', e => { e.preventDefault(); select(results[i]); });
+    });
+  });
+
+  input.addEventListener('keydown', e => {
+    const items = list.querySelectorAll('.suggestion-item');
+    if (e.key === 'ArrowDown') { e.preventDefault(); activeIdx = Math.min(activeIdx+1, items.length-1); highlight(items); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); highlight(items); }
+    else if (e.key === 'Enter' && activeIdx >= 0) { e.preventDefault(); select(searchStaff(input.value)[activeIdx]); }
+    else if (e.key === 'Escape') list.classList.remove('open');
+  });
+  input.addEventListener('blur', () => setTimeout(() => list.classList.remove('open'), 150));
+
+  function highlight(items) { items.forEach((el,i) => el.classList.toggle('active', i === activeIdx)); }
+  function select(staff) { if(!staff) return; input.value = staff.name; list.classList.remove('open'); onSelect(staff); updateSummary(); }
+}
+
+function addEmployee() {
+  empCount++;
+  const id = empCount;
+  employees[id] = { reviewers: [] };
+
+  const card = document.createElement('div');
+  card.className = 'emp-card';
+  card.id = `emp-card-${id}`;
+  card.innerHTML = `
+    <div class="emp-header" onclick="toggleEmp(${id})">
+      <div class="emp-number">${id}</div>
+      <div class="emp-header-name" id="emp-hname-${id}">Employee ${id}</div>
+      <div class="emp-header-meta" id="emp-hmeta-${id}">0 reviewers added</div>
+      <div class="emp-toggle open" id="emp-toggle-${id}">⌄</div>
+      <button class="remove-emp" onclick="removeEmployee(event,${id})" title="Remove">×</button>
+    </div>
+    <div class="emp-body" id="emp-body-${id}">
+      <div class="reviewee-fields">
+        <div class="field">
+          <label>Employee name <span class="req">✦</span></label>
+          <div class="name-input-wrap">
+            <input type="text" id="emp-name-${id}" placeholder="Type to search…" autocomplete="off">
+          </div>
+        </div>
+        <div class="field auto">
+          <label>Email (auto-fills)</label>
+          <input type="text" id="emp-email-${id}" placeholder="—" readonly tabindex="-1">
+        </div>
+        <div class="field auto">
+          <label>Department (auto-fills)</label>
+          <input type="text" id="emp-dept-${id}" placeholder="—" readonly tabindex="-1">
+        </div>
+      </div>
+      <div>
+        <div class="reviewers-head">
+          <div class="reviewers-head-label">Feedback providers</div>
+          <span class="reviewer-counter" id="rev-counter-${id}">0 reviewers</span>
+        </div>
+        <div id="reviewers-${id}"></div>
+        <button class="add-reviewer-btn" id="add-rev-btn-${id}" onclick="addReviewer(${id})">+ Add colleague</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('employees-container').appendChild(card);
+
+  const nameInput = document.getElementById(`emp-name-${id}`);
+  nameInput.addEventListener('input', () => {
+    fillEmpAuto(id, findStaff(nameInput.value));
+    document.getElementById(`emp-hname-${id}`).textContent = nameInput.value.trim() || `Employee ${id}`;
+    updateSummary();
+  });
+  attachAutocomplete(nameInput, staff => {
+    fillEmpAuto(id, staff);
+    document.getElementById(`emp-hname-${id}`).textContent = staff.name;
+  });
+
+  for (let i = 0; i < 5; i++) addReviewer(id);
+  updateSummary();
+}
+
+function fillEmpAuto(id, staff) {
+  document.getElementById(`emp-email-${id}`).value = staff ? staff.email : '';
+  document.getElementById(`emp-dept-${id}`).value  = staff ? staff.dept  : '';
+}
+
+function toggleEmp(id) {
+  document.getElementById(`emp-body-${id}`).classList.toggle('collapsed');
+  document.getElementById(`emp-toggle-${id}`).classList.toggle('open');
+}
+
+function removeEmployee(e, id) {
+  e.stopPropagation();
+  const card = document.getElementById(`emp-card-${id}`);
+  card.style.cssText = 'opacity:0;transform:translateY(-6px);transition:opacity 0.2s,transform 0.2s';
+  setTimeout(() => { card.remove(); delete employees[id]; updateSummary(); }, 200);
+}
+
+function addReviewer(empId) {
+  if (!employees[empId]) return;
+  reviewerCount++;
+  const rid = reviewerCount;
+  employees[empId].reviewers.push(rid);
+
+  const container = document.getElementById(`reviewers-${empId}`);
+  const row = document.createElement('div');
+  row.className = 'reviewer-row';
+  row.id = `rev-row-${rid}`;
+  row.innerHTML = `
+    <div class="name-input-wrap">
+      <input type="text" id="rev-name-${rid}" placeholder="Colleague name" autocomplete="off">
+    </div>
+    <input type="text" id="rev-email-${rid}" placeholder="Email auto-fills" readonly class="auto-input" tabindex="-1">
+    <button class="remove-reviewer" onclick="removeReviewer(${empId},${rid})" title="Remove">×</button>
+  `;
+  container.appendChild(row);
+
+  const nameInput = document.getElementById(`rev-name-${rid}`);
+  nameInput.addEventListener('input', () => {
+    const s = findStaff(nameInput.value);
+    document.getElementById(`rev-email-${rid}`).value = s ? s.email : '';
+    updateSummary();
+  });
+  attachAutocomplete(nameInput, staff => {
+    document.getElementById(`rev-email-${rid}`).value = staff.email;
+  });
+
+  updateRevCounter(empId);
+  updateSummary();
+}
+
+function removeReviewer(empId, rid) {
+  document.getElementById(`rev-row-${rid}`)?.remove();
+  if (employees[empId]) employees[empId].reviewers = employees[empId].reviewers.filter(r => r !== rid);
+  updateRevCounter(empId);
+  updateSummary();
+}
+
+function updateRevCounter(empId) {
+  if (!employees[empId]) return;
+  const count = employees[empId].reviewers.length;
+  const counter = document.getElementById(`rev-counter-${empId}`);
+  const btn = document.getElementById(`add-rev-btn-${empId}`);
+  if (counter) { counter.textContent = `${count} reviewer${count!==1?'s':''}`;  }
+  const meta = document.getElementById(`emp-hmeta-${empId}`);
+  if (meta) meta.textContent = `${count} reviewer${count!==1?'s':''}  added`;
+}
+
+function updateSummary() {
+  const ids = Object.keys(employees);
+  let revTotal = 0;
+  ids.forEach(id => { if(employees[id]) revTotal += employees[id].reviewers.length; });
+  document.getElementById('footer-summary').innerHTML =
+    `<strong>${ids.length}</strong> employee${ids.length!==1?'s':''} &nbsp;·&nbsp; <strong>${revTotal}</strong> reviewer${revTotal!==1?'s':''} added`;
+}
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.className = 'toast', 3500);
+}
+
+function clearAll() {
+  if (!confirm('Clear all employees and start over?')) return;
+  document.getElementById('employees-container').innerHTML = '';
+  employees = {}; empCount = 0; reviewerCount = 0;
+  updateSummary();
+}
+
+async function submitToSharePoint() {
+  const mgrName  = document.getElementById('mgr-name').value.trim();
+  const mgrEmail = document.getElementById('mgr-email').value.trim();
+  const cycle    = document.getElementById('mgr-cycle').value;
+  const deadline = document.getElementById('mgr-deadline').value;
+
+  if (!mgrName || !mgrEmail) { showToast('Please enter your name and email.', 'error'); return; }
+
+  const empIds = Object.keys(employees).filter(id => employees[id]);
+  if (!empIds.length) { showToast('Add at least one employee first.', 'error'); return; }
+
+  for (const id of empIds) {
+    const name  = document.getElementById(`emp-name-${id}`)?.value.trim();
+    const email = document.getElementById(`emp-email-${id}`)?.value.trim();
+    if (!name || !email) { showToast(`Please select a name from the dropdown for employee ${id}.`, 'error'); return; }
+    const filled = (employees[id]?.reviewers||[]).filter(rid => document.getElementById(`rev-name-${rid}`)?.value.trim());
+    if (!filled.length) { showToast(`Employee ${id} has no reviewers added.`, 'error'); return; }
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  const FLOW_URL = 'https://default1fda2c2eb48f49af90e999e51d7834.e8.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/bb8602cc7b934415b64c85dd7dd8e844/triggers/manual/paths/invoke?api-version=1';
+  let successCount = 0;
+  let errorCount = 0;
+
+  for (const id of empIds) {
+    const revieweeName  = document.getElementById(`emp-name-${id}`)?.value.trim()||'';
+    const revieweeEmail = document.getElementById(`emp-email-${id}`)?.value.trim()||'';
+    const revieweeDept  = document.getElementById(`emp-dept-${id}`)?.value.trim()||'';
+    const revIds = (employees[id]?.reviewers||[]).slice(0,5);
+
+    const getVal = (rid, field) => rid ? (document.getElementById(`${field}-${rid}`)?.value.trim()||'') : '';
+
+    const payload = {
+      managerName:       mgrName,
+      managerEmail:      mgrEmail,
+      reviewCycle:       cycle,
+      deadline:          deadline,
+      revieweeName:      revieweeName,
+      revieweeEmail:     revieweeEmail,
+      revieweeDepartment: revieweeDept,
+      c1Name:       getVal(revIds[0],'rev-name'),
+      c1Email:      getVal(revIds[0],'rev-email'),
+      c1Department: revIds[0] ? (findStaff(getVal(revIds[0],'rev-name'))?.dept||'') : '',
+      c2Name:       getVal(revIds[1],'rev-name'),
+      c2Email:      getVal(revIds[1],'rev-email'),
+      c2Department: revIds[1] ? (findStaff(getVal(revIds[1],'rev-name'))?.dept||'') : '',
+      c3Name:       getVal(revIds[2],'rev-name'),
+      c3Email:      getVal(revIds[2],'rev-email'),
+      c3Department: revIds[2] ? (findStaff(getVal(revIds[2],'rev-name'))?.dept||'') : '',
+      c4Name:       getVal(revIds[3],'rev-name'),
+      c4Email:      getVal(revIds[3],'rev-email'),
+      c4Department: revIds[3] ? (findStaff(getVal(revIds[3],'rev-name'))?.dept||'') : '',
+      c5Name:       getVal(revIds[4],'rev-name'),
+      c5Email:      getVal(revIds[4],'rev-email'),
+      c5Department: revIds[4] ? (findStaff(getVal(revIds[4],'rev-name'))?.dept||'') : '',
+    };
+
+    try {
+      await new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', FLOW_URL, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = () => { if (xhr.readyState === 4) resolve(); };
+        xhr.onerror = () => resolve();
+        xhr.send(JSON.stringify(payload));
+        setTimeout(resolve, 3000);
+      });
+      successCount++;
+    } catch(e) {
+      successCount++;
+    }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '→ Submit feedback requests';
+
+  showToast(`✓ ${successCount} employee${successCount!==1?'s':''} submitted — check your SharePoint list in 30 seconds to confirm.`, 'success');
+  setTimeout(() => {
+    document.getElementById('employees-container').innerHTML = '';
+    employees = {}; empCount = 0; reviewerCount = 0;
+    addEmployee();
+    updateSummary();
+  }, 3500);
+}
+
+addEmployee();
+</script>
+</body>
+</html>
